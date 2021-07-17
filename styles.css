@@ -1,4 +1,24 @@
 body,
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+#container {
+  margin: auto;
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
+  justify-content: space-evenly;
+
+  grid-row-gap: 20px;
+}
+
+.card {
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
