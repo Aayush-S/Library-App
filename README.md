@@ -1,2 +1,2 @@
 # Library-TOP
-Library to keep track of books with object
+Library to keep track of books with objects
