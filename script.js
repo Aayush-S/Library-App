@@ -1,5 +1,47 @@
 let myLibrary = [];
 
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
+
+function loadLocalStorage() {
+  // fetch from localStorage if available
+  // set myLibrary to fetched value
+  if (storageAvailable('localStorage')) {
+    myLibrary = (JSON.parse(localStorage.getItem('library')) === null) ? [] : JSON.parse(localStorage.getItem('library'));
+    displayBooks();
+  }
+  else {
+    alert("Local Storage not available. Content will not save on page reload.");
+  }
+}
+
+function updateLocalStorage() {
+  // Set variable in local storage to the current 'myLibrary' array
+  localStorage.setItem('library', JSON.stringify(myLibrary));
+}
+
 function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
@@ -15,6 +57,7 @@ Book.prototype.didRead = function() {
 function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read));
   displayBooks();
+  updateLocalStorage();
 }
 
 function removeAllChildNodes(parent) {
@@ -63,6 +106,7 @@ function displayBooks() {
     remove.addEventListener('click', function (e) {
       let removed = myLibrary.splice(e.target.parentElement.dataset.key, 1);
       displayBooks();
+      updateLocalStorage();
     });
     card.appendChild(remove);
 
@@ -72,9 +116,10 @@ function displayBooks() {
 
 const newBookBtn = document.querySelector('#new-book-btn');
 newBookBtn.addEventListener('click', () => {
-  console.log(document.getElementById('book-title').textContent);
   addBookToLibrary(document.getElementById('book-title').value,
     document.getElementById('book-author').value,
     document.getElementById('book-pages').value,
     document.getElementById('book-read').checked);
 });
+
+loadLocalStorage();
