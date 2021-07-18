@@ -10,6 +10,7 @@ function Book(title, author, pages, read) {
 
 function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read));
+  displayBooks();
 }
 
 function displayBooks() {
@@ -32,7 +33,8 @@ function displayBooks() {
       pages.textContent = book.pages + " pages";
       card.appendChild(pages);
 
-      let read = document.createElement('p');
+      let read = document.createElement('button');
+      read.classList.add('read-btn');
       read.textContent = book.read ? "Read" : "Not Read";
       card.appendChild(read);
 
@@ -42,15 +44,12 @@ function displayBooks() {
   });
 }
 
-addBookToLibrary("1984", "George Orwell", 328, false);
-addBookToLibrary("testbook", "authorname", 43, true);
-displayBooks();
-
-addBookToLibrary("1984", "George Orwell", 328, false);
-addBookToLibrary("testbook", "authorname", 43, true);
-
-addBookToLibrary("1984", "George Orwell", 328, false);
-addBookToLibrary("testbook", "authorname", 43, true);
-
-displayBooks();
+const newBookBtn = document.querySelector('#new-book-btn');
+newBookBtn.addEventListener('click', () => {
+  console.log(document.getElementById('book-title').textContent);
+  addBookToLibrary(document.getElementById('book-title').value,
+    document.getElementById('book-author').value,
+    document.getElementById('book-pages').value,
+    document.getElementById('book-read').checked);
+});
 

@@ -6,11 +6,11 @@ html {
 
 #container {
   margin: auto;
+  margin-top: 50px;
   width: 90%;
   display: grid;
   grid-template-columns: repeat(auto-fill, 200px);
   justify-content: space-evenly;
-
   grid-row-gap: 20px;
   grid-column-gap: 10px;
 }
