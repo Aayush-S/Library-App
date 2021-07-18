@@ -59,6 +59,7 @@ function displayBooks() {
 
     let remove = document.createElement('button');
     remove.textContent = "Remove";
+    remove.classList.add('remove-btn');
     remove.addEventListener('click', function (e) {
       let removed = myLibrary.splice(e.target.parentElement.dataset.key, 1);
       displayBooks();
@@ -77,26 +78,3 @@ newBookBtn.addEventListener('click', () => {
     document.getElementById('book-pages').value,
     document.getElementById('book-read').checked);
 });
-
-
-addBookToLibrary('1', 'fds', 32, true);
-addBookToLibrary('2', 'fds', 32, false);
-addBookToLibrary('3', 'fds', 32, false);
-addBookToLibrary('4', 'fds', 32, false);
-addBookToLibrary('5', 'fds', 32, false);
-addBookToLibrary('6', 'fds', 32, false);
-
-
-// TODO: Use prototype stuff with this
-/*
-// TODO: Probably need to add the onlick as soon as the button is created.
-const readButtons = document.querySelectorAll(".read-btn");
-readButtons.forEach(button => button.addEventListener('click', () => {
-    console.log("change");
-    this.read = !this.read;
-    button.textContent = this.read ? "Read" : "Not Read";
-  })
-);
-*/
-
-

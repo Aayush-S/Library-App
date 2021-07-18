@@ -29,3 +29,26 @@ html {
 .card-completed {
   background-color: #73f37d;
 }
+
+.read-btn {
+  background-color: #acb1d7;
+  border: 1px solid #3f8982;
+  border-radius: 2px;
+  color: #36726c;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.remove-btn {
+  background-color: #d7acac;
+  border: 1px solid #3f8982;
+  border-radius: 2px;
+  color: #36726c;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
