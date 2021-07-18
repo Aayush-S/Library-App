@@ -1,11 +1,15 @@
 let myLibrary = [];
 
 function Book(title, author, pages, read) {
-  this.title = title,
-  this.author = author,
-  this.pages = pages,
-  this.read = read
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
   displayed = false;
+}
+
+Book.prototype.didRead = function() {
+  this.read = !this.read;
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -44,6 +48,10 @@ function displayBooks() {
     let read = document.createElement('button');
     read.classList.add('read-btn');
     read.textContent = book.read ? "Read" : "Not Read";
+    read.addEventListener('click', function(e) {
+      myLibrary[e.target.parentElement.dataset.key].didRead();
+      read.textContent = book.read ? "Read" : "Not Read";
+    });
     card.appendChild(read);
 
     let remove = document.createElement('button');
@@ -68,7 +76,7 @@ newBookBtn.addEventListener('click', () => {
 });
 
 
-addBookToLibrary('1', 'fds', 32, false);
+addBookToLibrary('1', 'fds', 32, true);
 addBookToLibrary('2', 'fds', 32, false);
 addBookToLibrary('3', 'fds', 32, false);
 addBookToLibrary('4', 'fds', 32, false);
