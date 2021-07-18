@@ -5,6 +5,7 @@ function Book(title, author, pages, read) {
   this.author = author,
   this.pages = pages,
   this.read = read
+  displayed = false;
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -48,7 +49,7 @@ function displayBooks() {
     let remove = document.createElement('button');
     remove.textContent = "Remove";
     remove.addEventListener('click', function (e) {
-      let removed = myLibrary.splice(e.target.dataset.key, 1);
+      let removed = myLibrary.splice(e.target.parentElement.dataset.key, 1);
       displayBooks();
     });
     card.appendChild(remove);
