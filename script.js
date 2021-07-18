@@ -48,9 +48,12 @@ function displayBooks() {
     let read = document.createElement('button');
     read.classList.add('read-btn');
     read.textContent = book.read ? "Read" : "Not Read";
+    book.read ? card.classList.add('card-completed') : card.classList.remove('card-completed');
+
     read.addEventListener('click', function(e) {
       myLibrary[e.target.parentElement.dataset.key].didRead();
       read.textContent = book.read ? "Read" : "Not Read";
+      book.read ? e.target.parentElement.classList.add('card-completed') : e.target.parentElement.classList.remove('card-completed');
     });
     card.appendChild(read);
 

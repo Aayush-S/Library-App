@@ -25,3 +25,7 @@ html {
   color: #36726c;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
+
+.card-completed {
+  background-color: #73f37d;
+}
