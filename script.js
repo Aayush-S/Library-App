@@ -29,7 +29,8 @@ function loadLocalStorage() {
   // fetch from localStorage if available
   // set myLibrary to fetched value
   if (storageAvailable('localStorage')) {
-    myLibrary = (JSON.parse(localStorage.getItem('library')) === null) ? [] : JSON.parse(localStorage.getItem('library'));
+    let fetchedLibrary = JSON.parse(localStorage.getItem('library'));
+    myLibrary = (fetchedLibrary === null) ? [] : fetchedLibrary;
     displayBooks();
   }
   else {
