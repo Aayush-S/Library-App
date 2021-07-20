@@ -11,6 +11,7 @@ class Book {
 
 Book.prototype.didRead = function() {
   this.read = !this.read;
+  updateLocalStorage();
 }
 
 function addBookToLibrary(title, author, pages, read) {
