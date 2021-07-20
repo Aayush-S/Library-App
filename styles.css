@@ -24,6 +24,11 @@ html {
   text-align: center;
   color: #36726c;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .card-completed {
@@ -40,7 +45,14 @@ html {
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
+  margin-right: 2px;
+  transition: 0.4s;
 }
+
+.read-btn:hover {
+  background-color: #9ea3d2;
+}
+
 .remove-btn {
   background-color: #d7acac;
   border: 1px solid #3f8982;
@@ -51,4 +63,10 @@ html {
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
+  margin-left: 2px;
+  transition: 0.4s;
+}
+
+.remove-btn:hover {
+  background-color: #d79898;
 }
