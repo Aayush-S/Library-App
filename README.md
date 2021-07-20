@@ -1,12 +1,18 @@
 # Library-TOP
 
-Library app that keeps track of books the user inputs.
+A library app to keep track of your books!
 
-Learning Retro:
+## Keep track of:
 
-- Had a great time with this project. Tons of fun and kept on wanting to go back after breaks
-- Learned more about using the DOM and events
-- More practice with styling and had a decent outcome design wise (still need more practice)
-- Learned how to implement an Object and use its properties
-- Used the prototype system on the Book object (though might need more practice with this one)
-- Learned how to use localStorage (Super cool!!!)
+- Title
+- Author
+- Number of pages
+- If you have read the book
+
+Changes are saved on the local storage so your library will be saved on reload
+
+### Built With
+
+- HTML
+- CSS
+- JavaScript
