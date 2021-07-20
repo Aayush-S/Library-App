@@ -1,7 +1,7 @@
 let myLibrary = [];
 
 class Book {
-  constructor(title, author, pages, read) {
+  constructor(title = "Unknown", author = "Unknown", pages = 0, read = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -29,10 +29,15 @@ function removeAllChildNodes(parent) {
 function displayBooks() {
   const container = document.querySelector('#container');
   removeAllChildNodes(container);
-  let card;
+  
   myLibrary.forEach((book, index) => {
+    let card = createBookCard(book, index);
+    container.appendChild(card);
+  });
+}
 
-    card = document.createElement('div');
+function createBookCard(book, index) {
+  let card = document.createElement('div');
     card.dataset.key = index;
     card.classList.add('card');
 
@@ -71,8 +76,7 @@ function displayBooks() {
     });
     card.appendChild(remove);
 
-    container.appendChild(card);
-  });
+    return card;
 }
 
 const newBookBtn = document.querySelector('#new-book-btn');
@@ -82,6 +86,8 @@ newBookBtn.addEventListener('click', () => {
     document.getElementById('book-pages').value,
     document.getElementById('book-read').checked);
 });
+
+// Local Storage Logic
 
 function storageAvailable(type) {
     var storage;
