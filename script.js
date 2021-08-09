@@ -9,10 +9,10 @@ class Book {
   }
 }
 
-Book.prototype.didRead = function() {
+Book.prototype.didRead = function () {
   this.read = !this.read;
   updateLocalStorage();
-}
+};
 
 function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read));
@@ -21,15 +21,15 @@ function addBookToLibrary(title, author, pages, read) {
 }
 
 function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
 function displayBooks() {
-  const container = document.querySelector('#container');
+  const container = document.querySelector("#container");
   removeAllChildNodes(container);
-  
+
   myLibrary.forEach((book, index) => {
     let card = createBookCard(book, index);
     container.appendChild(card);
@@ -37,100 +37,110 @@ function displayBooks() {
 }
 
 function createBookCard(book, index) {
-  let card = document.createElement('div');
-    card.dataset.key = index;
-    card.classList.add('card');
+  let card = document.createElement("div");
+  card.dataset.key = index;
+  card.classList.add("card");
 
-    let title = document.createElement('h3');
-    title.textContent = book.title;
-    card.appendChild(title);
+  let title = document.createElement("h3");
+  title.textContent = book.title;
+  card.appendChild(title);
 
-    let author = document.createElement('p');
-    author.textContent = book.author;
-    card.appendChild(author);
+  let author = document.createElement("p");
+  author.textContent = book.author;
+  card.appendChild(author);
 
-    let pages = document.createElement('p');
-    pages.textContent = book.pages + " pages";
-    card.appendChild(pages);
+  let pages = document.createElement("p");
+  pages.textContent = book.pages + " pages";
+  card.appendChild(pages);
 
-    let read = document.createElement('button');
-    read.classList.add('read-btn');
+  let read = document.createElement("button");
+  read.classList.add("read-btn");
+  read.textContent = book.read ? "Read" : "Not Read";
+  book.read
+    ? card.classList.add("card-completed")
+    : card.classList.remove("card-completed");
+
+  read.addEventListener("click", function (e) {
+    console.log(myLibrary);
+    myLibrary[e.target.parentElement.dataset.key].didRead();
     read.textContent = book.read ? "Read" : "Not Read";
-    book.read ? card.classList.add('card-completed') : card.classList.remove('card-completed');
+    book.read
+      ? e.target.parentElement.classList.add("card-completed")
+      : e.target.parentElement.classList.remove("card-completed");
+  });
+  card.appendChild(read);
 
-    read.addEventListener('click', function(e) {
-      console.log(myLibrary);
-      (myLibrary[e.target.parentElement.dataset.key]).didRead();
-      read.textContent = book.read ? "Read" : "Not Read";
-      book.read ? e.target.parentElement.classList.add('card-completed') : e.target.parentElement.classList.remove('card-completed');
-    });
-    card.appendChild(read);
+  let remove = document.createElement("button");
+  remove.textContent = "Remove";
+  remove.classList.add("remove-btn");
+  remove.addEventListener("click", function (e) {
+    let removed = myLibrary.splice(e.target.parentElement.dataset.key, 1);
+    displayBooks();
+    updateLocalStorage();
+  });
+  card.appendChild(remove);
 
-    let remove = document.createElement('button');
-    remove.textContent = "Remove";
-    remove.classList.add('remove-btn');
-    remove.addEventListener('click', function (e) {
-      let removed = myLibrary.splice(e.target.parentElement.dataset.key, 1);
-      displayBooks();
-      updateLocalStorage();
-    });
-    card.appendChild(remove);
-
-    return card;
+  return card;
 }
 
-const newBookBtn = document.querySelector('#new-book-btn');
-newBookBtn.addEventListener('click', () => {
-  addBookToLibrary(document.getElementById('book-title').value,
-    document.getElementById('book-author').value,
-    document.getElementById('book-pages').value,
-    document.getElementById('book-read').checked);
+const newBookForm = document.querySelector("#book-form");
+newBookForm.addEventListener("submit", () => {
+  console.log("submit");
+  addBookToLibrary(
+    document.getElementById("book-title").value,
+    document.getElementById("book-author").value,
+    document.getElementById("book-pages").value,
+    document.getElementById("book-read").checked
+  );
 });
 
 // Local Storage Logic
 
 function storageAvailable(type) {
-    var storage;
-    try {
-        storage = window[type];
-        var x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    }
-    catch(e) {
-        return e instanceof DOMException && (
-            // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-            // acknowledge QuotaExceededError only if there's something already stored
-            (storage && storage.length !== 0);
-    }
+  var storage;
+  try {
+    storage = window[type];
+    var x = "__storage_test__";
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      // everything except Firefox
+      (e.code === 22 ||
+        // Firefox
+        e.code === 1014 ||
+        // test name field too, because code might not be present
+        // everything except Firefox
+        e.name === "QuotaExceededError" ||
+        // Firefox
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      // acknowledge QuotaExceededError only if there's something already stored
+      storage &&
+      storage.length !== 0
+    );
+  }
 }
 
 function loadLocalStorage() {
   // fetch from localStorage if available
   // set myLibrary to fetched value
-  if (storageAvailable('localStorage')) {
-    let fetchedLibrary = JSON.parse(localStorage.getItem('library'));
-    myLibrary = (fetchedLibrary === null) ? [] : fetchedLibrary;
-    myLibrary = myLibrary.map(book => new Book(book.title, book.author, book.pages, book.read));
+  if (storageAvailable("localStorage")) {
+    let fetchedLibrary = JSON.parse(localStorage.getItem("library"));
+    myLibrary = fetchedLibrary === null ? [] : fetchedLibrary;
+    myLibrary = myLibrary.map(
+      (book) => new Book(book.title, book.author, book.pages, book.read)
+    );
     displayBooks();
-  }
-  else {
+  } else {
     alert("Local Storage not available. Content will not save on page reload.");
   }
 }
 
 function updateLocalStorage() {
   // Set variable in local storage to the current 'myLibrary' array
-  localStorage.setItem('library', JSON.stringify(myLibrary));
+  localStorage.setItem("library", JSON.stringify(myLibrary));
 }
 
 loadLocalStorage();
