@@ -85,13 +85,13 @@ function createBookCard(book, index) {
 
 const newBookForm = document.querySelector("#book-form");
 newBookForm.addEventListener("submit", () => {
-  console.log("submit");
   addBookToLibrary(
     document.getElementById("book-title").value,
     document.getElementById("book-author").value,
     document.getElementById("book-pages").value,
     document.getElementById("book-read").checked
   );
+  return false;
 });
 
 // Local Storage Logic
